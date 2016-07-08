@@ -1,0 +1,66 @@
+<div class="container-fluid">
+  <div class="row" id="headerColor">
+    <div class="col-md-12"><img src="images/dc-roasters.png" alt="" /></div>
+  </div>
+  <div class="row" id="headerColor">
+    <nav class="navbar navbar-light bg-faded" id="navigation">
+      <ul class="nav navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="/#/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#/options">Options</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#/delivery">Delivery</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#/payment">Payment</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="row">
+    <div class="col-md-12" id="text">Tell us what you want!</div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="loginBox">
+        <br><br>
+        <p style="font-size: 2em;">Individual Package</p>
+        <p style="font-size: 1em;">For those who drink alone</p>
+        <p><img src="images/solo-drinker.jpg" class="optionsImage"/></p>
+        <p>Cups:     14</p>
+        <p>Price per cup:     $0.50</p>
+        <p>Total:     $7.00</p>
+        <p>
+          <select ng-model="coffeeOptionSingle">
+            <option ng-repeat="option in coffeeOptions" value="{{option}}">{{option}}</option>
+          </select>
+        </p>
+        <br><br>
+        <input ng-click="submit1(0.35)" type="submit" name="submit" value="Order">
+        <br><br>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="loginBox">
+        <br><br>
+        <p style="font-size: 2em;">Family Package</p>
+        <p style="font-size: 1em;">For those who drink together</p>
+        <p><img src="images/coffee-drinkers.jpg" class="optionsImage"/></p>
+        <p>Cups:     40</p>
+        <p>Price per cup:     $0.35</p>
+        <p>Total:     $20.00</p>
+        <p>
+          <select ng-model="coffeeOptionFamily">
+            <option ng-repeat="option in coffeeOptions" value="{{option}}">{{option}}</option>
+          </select>
+        </p>
+        <br><br>
+        <input ng-click="submit2(0.90)" type="submit" name="submit" value="Order">
+        <br><br>
+      </div>
+    </div>
+  </div>
+</div>

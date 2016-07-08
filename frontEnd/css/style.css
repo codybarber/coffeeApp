@@ -63,11 +63,28 @@
 .loginBox {
   text-align: center;
   box-sizing: border-box;
-  border: black solid 5px;
+  border: black solid 1.5px;
   background-image: url(wov.png);
   box-shadow: 5px 5px 5px grey;
 }
 
 #box {
   margin-top: 10%;
+}
+
+.optionsImage {
+  height: 175px;
+  width: 250px;
+}
+
+.loginButton {
+  margin-left: 25px;
+}
+
+.resizedTextbox {
+  width: 400px;
+}
+
+th {
+  padding-top: 10px;
 }

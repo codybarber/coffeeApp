@@ -4,7 +4,8 @@ var User = require('./user');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var bcrypt = require('bcrypt');
-var randomtoken = require('rand-token');     /* https://www.npmjs.com/package/rand-token */
+var randomtoken = require('rand-token');
+var cors = require('cors');
 
 /* MongoDB Setup */
 mongoose.connect('mongodb://localhost/coffeeDb');
@@ -17,6 +18,7 @@ var myEncryptedPassword = '';
 app.set('view engine', 'hbs');
 app.use(express.static('public'));
 app.use(bodyParser.json());
+app.use(cors());
 
 /* global variables */
 
@@ -32,18 +34,13 @@ var coffeeOptions = [
 var myNewUser;
 
 /* Routes */
-app.get('/', function(request, response){
+app.get('/options', function(request, response){
   response.json(coffeeOptions);
 });
 
 app.post('/signup', function(request, response){
 
-  console.log('******************************************************************************************************************************');
   var credentials = request.body;
-
-  console.log('credentials = ' + credentials);
-  console.log('credentials._id = ' + credentials._id);
-  console.log('credentials.password = ' + credentials.password);
 
   /* does the user already exist in the database? */
   User.findOne({_id: credentials._id }, function(err, res) {
@@ -207,25 +204,25 @@ app.post('/orders', function(request, response){
 
   });
 
-  app.get('/orders', function(request, response){
-    var tokenData = request.query.token;
+app.get('/orders', function(request, response){
+  var tokenData = request.query.token;
 
-    User.findOne({"authenticationTokens.token" : tokenData})
-    .then(function(findOneResponse) {
-      console.log(findOneResponse.orders);
-      response.json(findOneResponse.orders);
-    })
-    .catch(function(error) {
-      console.log('user with token [' + tokenData + '] not found...');
-      console.error(error.message);
-      response.json({
-        "status": "fail",
-        "message": "unable to find orders"
-      });
-      return;
+  User.findOne({"authenticationTokens.token" : tokenData})
+  .then(function(findOneResponse) {
+    console.log(findOneResponse.orders);
+    response.json(findOneResponse.orders);
+  })
+  .catch(function(error) {
+    console.log('user with token [' + tokenData + '] not found...');
+    console.error(error.message);
+    response.json({
+      "status": "fail",
+      "message": "unable to find orders"
     });
+    return;
   });
+});
 
-  app.listen(3000, function(){
-    console.log('listening on port 3000');
-  });
+app.listen(8000, function(){
+  console.log('listening on port 8000');
+});

@@ -1,0 +1,97 @@
+<div class="container-fluid">
+  <div class="row" id="headerColor">
+    <div class="col-md-8"><img src="images/dc-roasters.png" alt="" /></div>
+  </div>
+  <div class="row" id="headerColor">
+    <nav class="navbar navbar-light bg-faded" id="navigation">
+      <ul class="nav navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="/#/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#/options">Options</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#/delivery">Delivery</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#/payment">Payment</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="row" id="box">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <div class="">
+        <table style="width:100%" ng-model="order">
+          <tr class="tableHeader">
+            <th colspan="2">Choices</th>
+          </tr>
+          <tr>
+            <td>Grind</td>
+            <td>{{order.options.grind}}</td>
+          </tr>
+          <tr>
+            <td>Frequency of Delivery</td>
+            <td>-----</td>
+          </tr>
+          <tr>
+            <td>Coffee in Pounds</td>
+            <td>{{order.options.quantity}}</td>
+          </tr>
+          <tr>
+            <th colspan="2">Delivery Information</th>
+          </tr>
+          <tr>
+            <td>Full Name</td>
+            <td>{{order.address.name}}</td>
+          </tr>
+          <tr>
+            <td>Address</td>
+            <td>{{order.address.address}}</td>
+          </tr>
+          <tr>
+            <td>Address 2</td>
+            <td>{{order.address.address2}}</td>
+          </tr>
+          <tr>
+            <td>City</td>
+            <td>{{order.address.city}}</td>
+          </tr>
+          <tr>
+            <td>State</td>
+            <td>{{order.address.state}}</td>
+          </tr>
+          <tr>
+            <td>Zip Code</td>
+            <td>{{order.address.zipCode}}</td>
+          </tr>
+          <tr>
+            <td>Delivery Date</td>
+            <td>{{order.address.deliveryDate}}</td>
+          </tr>
+          <tr>
+            <th colspan="2">Current Charge</th>
+          </tr>
+          <tr>
+            <td>Quantity</td>
+            <td>{{order.options.quantity}}</td>
+          </tr>
+          <tr>
+            <td>Shipping</td>
+            <td>Free!</td>
+          </tr>
+          <tr>
+            <td>Total</td>
+            <td>--------</td>
+          </tr>
+        </table>
+        <br>
+        <input ng-click="pay()" type="submit" name="submit" value="Pay With Credit Card">
+        <input ng-click="cancel()" type="submit" name="submit" value="Cancel">
+      </div>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>
