@@ -1,0 +1,73 @@
+#image1 {
+  background-image: url('coffee.jpg');
+  background-position: bottom -150px left 0px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 400px;
+  max-width: 100%;
+}
+
+#image2 {
+  background-image: url('coffee-bags.jpg');
+  background-position: bottom -200px left -300px;
+  background-repeat: no-repeat;
+  height: 400px;
+  max-width: 100%;
+}
+
+#text {
+  text-align: center;
+  font-size: 3em;
+}
+
+.grower {
+  margin: 100px;
+  width: 50%;
+  height: 50%;
+  transform: rotate(-15deg);
+}
+
+#justColorRows {
+  background-image: url(ricepaper_v3.png);
+}
+
+#image3 {
+  background-image: url('cup-steam.jpg');
+  background-position: bottom -350px left 0px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 400px;
+  max-width: 300%;
+}
+
+#footer {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+#headerColor {
+  background-image: url(ricepaper_v3.png);
+  box-shadow: 3px 3px 3px 3px grey;
+}
+
+.nav-link {
+  color: black
+}
+
+.nav-link:hover {
+  color: grey;
+  background-image: url(ricepaper_v3.png);
+}
+
+.loginBox {
+  text-align: center;
+  box-sizing: border-box;
+  border: black solid 5px;
+  background-image: url(wov.png);
+  box-shadow: 5px 5px 5px grey;
+}
+
+#box {
+  margin-top: 10%;
+}
