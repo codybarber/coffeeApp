@@ -41,6 +41,7 @@ app.get('/options', function(request, response){
 app.post('/signup', function(request, response){
 
   var credentials = request.body;
+  console.log(credentials);
 
   /* does the user already exist in the database? */
   User.findOne({_id: credentials._id }, function(err, res) {
@@ -65,22 +66,21 @@ app.post('/signup', function(request, response){
           console.log('the encrypted password is [' + hash + '].');
           myNewUser = new User({
             _id:                credentials._id,
-            encryptedPassword:  hash
+            encryptedPassword:  hash,
+            email:              credentials.email
           });
           myNewUser.save(function(err){
             if(err) {
               console.log('there was an error creating the new user in the database');
               console.error(err.message);
               console.log(err.errors);
-
               return;
             }
             console.log('the user was created successfully in the database');
+            response.json({ status: 'ok'});
           });
         });
       });
-      response.send('ok');     /* postman will lock up unless you issue a response somewhere in this function */
-
     } else if (credentials._id === res._id) {
       /* The requested user already exists in the database */
       console.log('the requested username [' + credentials._id + '] already exists');
@@ -116,7 +116,8 @@ app.post('/login', function(request, response){
 
     /* OK - we read the user.  Does the password match? use the bcrypt compare() method */
     console.log('checking data for user [' + credentials._id + ']');
-
+    console.log(findResponse.encryptedPassword);
+    console.log(credentials.password);
     bcrypt.compare(credentials.password, findResponse.encryptedPassword, function(err, res) {
       if (err) {
         console.log('an error occured comparing passwords');
@@ -157,7 +158,15 @@ app.post('/login', function(request, response){
 
       User.findByIdAndUpdate(
         credentials._id,
-        { $push: { authenticationTokens:  {"token" : token, "expires" : expirationDate } } },
+        { $push:
+          {
+            authenticationTokens:
+            {
+              "token" : token,
+              "expires" : expirationDate
+            }
+          }
+        },
         function(err, reply) {
           if (err) {
             console.error(err.message);

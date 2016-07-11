@@ -1,4 +1,4 @@
-var app = angular.module('my-app', ['ngRoute']);
+var app = angular.module('my-app', ['ngRoute', 'ngCookies']);
 
 
 
@@ -51,6 +51,7 @@ var order = {
   }
 };
 
+
 app.controller('optionsController', function($scope, $http, $location) {
   var API = 'http://localhost:8000';
   $http.get(API + '/options')
@@ -93,3 +94,68 @@ app.controller('paymentController', function($scope, $http, $location) {
   };
   $scope.order = order;
 });
+
+app.controller('registerController', function($scope, $http, $location) {
+  var credentials = {
+    "_id": null,
+    "password": null,
+    "email": null
+  };
+
+  $scope.register = function() {
+    if ($scope.password !== $scope.confirmPassword) {
+      $location.path('/register');
+    } else {
+      credentials._id = $scope.username;
+      credentials.password = $scope.password;
+      credentials.email = $scope.email;
+    }
+    $http.post('http://localhost:8000/signup', credentials).success(function(data) {
+      $location.path('/login');
+    });
+  };
+});
+
+app.controller('loginController', function($scope, $http, $location, $cookies) {
+  var credentials = {
+    "_id": null,
+    "password": null,
+    "email": null
+  };
+
+  $scope.login = function() {
+    credentials._id = $scope.username;
+    credentials.password = $scope.password;
+    $http.post('http://localhost:8000/login', credentials).success(function(data) {
+      $cookies.put('Token', data.token);
+      $location.path('/');
+    });
+  };
+});
+
+app.controller('mainController', function() {
+
+});
+
+app.run(function($rootScope, $location, $cookies) {
+  $rootScope.$on('$locationChangeStart', function(event, nextUrl, currentUrl) {
+    currentUrl = currentUrl.split('#');
+    nextUrl = nextUrl.split('#');
+    token = $cookies.get('Token');
+    if (token === undefined) {
+      if (nextUrl[1] === '/') {
+        $location.path('/');
+      } else if (nextUrl[1] === '/login') {
+        $location.path('/login');
+      } else if (nextUrl[1] === '/register') {
+        $location.path('/register');
+      } else if (nextUrl[1] === '/options' || '/delivery' || '/payment') {
+        $location.path('/login');
+      }
+    }
+    if (token !== undefined) {
+      $location.path(nextUrl[1]);
+    }
+    $cookies.put('nextUrl', nextUrl[1]);
+    });
+  });
