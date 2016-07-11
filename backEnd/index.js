@@ -194,10 +194,11 @@ app.post('/login', function(request, response){
 app.post('/orders', function(request, response){
   // console.log(response);
   var orderData = request.body;
-
+  console.log(orderData);
   User.findOne({"authenticationTokens.token" : orderData.token})
   .then(function(findOneResponse) {
     findOneResponse.orders.push(orderData.order);
+    console.log(orderData.order);
     return findOneResponse.save();
   })
   .then(function(findOneResponse) {
@@ -206,12 +207,12 @@ app.post('/orders', function(request, response){
     });
   })
   .catch(function(err) {
+    console.log(err.errors);
     response.json({
       status: 'fail',
       error: err.message});
     });
-
-  });
+});
 
 app.get('/orders', function(request, response){
   var tokenData = request.query.token;

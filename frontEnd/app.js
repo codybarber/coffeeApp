@@ -48,7 +48,8 @@ var order = {
     "state": null,
     "zipCode": null,
     "deliveryDate": null
-  }
+  },
+  total: null
 };
 
 
@@ -62,12 +63,14 @@ app.controller('optionsController', function($scope, $http, $location) {
   $scope.submit1 = function(quantity) {
     order.options.grind = $scope.coffeeOptionSingle;
     order.options.quantity = quantity;
+    order.total = 7.00;
     $location.path('/delivery');
   };
 
   $scope.submit2 = function(quantity) {
     order.options.grind = $scope.coffeeOptionFamily;
     order.options.quantity = quantity;
+    order.total = 20.00;
     $location.path('/delivery');
   };
 });
@@ -85,9 +88,13 @@ app.controller('deliveryController', function($scope, $http, $location) {
   };
 });
 
-app.controller('paymentController', function($scope, $http, $location) {
+app.controller('paymentController', function($scope, $http, $location, $cookies) {
   $scope.pay = function() {
     $location.path('/thankyou');
+    $http.post('http://localhost:8000/orders', {
+      token: $cookies.get('Token'),
+      order: order
+    });
   };
   $scope.cancel = function() {
     $location.path('/');
@@ -128,12 +135,16 @@ app.controller('loginController', function($scope, $http, $location, $cookies) {
     credentials.password = $scope.password;
     $http.post('http://localhost:8000/login', credentials).success(function(data) {
       $cookies.put('Token', data.token);
-      $location.path('/');
+      $location.path('/options');
     });
   };
 });
 
 app.controller('mainController', function() {
+
+});
+
+app.controller('thankyouController', function() {
 
 });
 

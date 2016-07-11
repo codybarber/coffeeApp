@@ -2,7 +2,7 @@
   <div class="row" id="headerColor">
     <div class="col-md-8"><a href='#/'><img src="images/dc-roasters.png" alt="" /></a></div>
   </div>
-  <div class="row" id="headerColor">
+  <div class="row" id="headerShadow">
     <nav class="navbar navbar-light bg-faded" id="navigation">
       <ul class="nav navbar-nav">
         <li class="nav-item active">
@@ -22,8 +22,8 @@
   </div>
   <div class="row" id="box">
     <div class="col-md-4"></div>
-    <div class="col-md-4">
-      <div class="">
+    <div class="col-md-4 loginBox">
+      <div>
         <table style="width:100%" ng-model="order">
           <tr class="tableHeader">
             <th colspan="2">Choices</th>
@@ -84,15 +84,16 @@
           </tr>
           <tr>
             <td>Total</td>
-            <td>--------</td>
+            <td>{{order.total}}</td>
           </tr>
         </table>
         <br>
         <input ng-click="pay()" type="submit" name="submit" value="Pay With Credit Card">
         <input ng-click="cancel()" type="submit" name="submit" value="Cancel">
       </div>
-      <br><br><br><br>
+      <br>
     </div>
     <div class="col-md-4"></div>
   </div>
+    <br><br>
 </div>

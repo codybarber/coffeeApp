@@ -1,3 +1,7 @@
+body {
+  font-family: 'Questrial', sans-serif;
+}
+
 #image1 {
   background-image: url('coffee.jpg');
   background-position: bottom -150px left 0px;
@@ -29,6 +33,7 @@
 
 #justColorRows {
   background-image: url(ricepaper_v3.png);
+  font-family: 'Questrial', sans-serif;
 }
 
 #image3 {
@@ -48,11 +53,17 @@
 
 #headerColor {
   background-image: url(ricepaper_v3.png);
-  box-shadow: 3px 3px 3px 3px grey;
+}
+
+#headerShadow {
+  background-image: url(ricepaper_v3.png);
+  box-shadow: 3px 3px 3px  grey;
 }
 
 .nav-link {
-  color: black
+  text-decoration: none;
+  color: black;
+  font-family: 'Questrial', sans-serif;
 }
 
 .nav-link:hover {
@@ -87,4 +98,36 @@
 
 th {
   padding-top: 10px;
+}
+
+td {
+  text-align: left;
+  font-size: 1.2em;
+}
+
+th {
+  font-size: 1.5em;
+  text-decoration: underline;
+}
+
+.parent {
+  display: table;
+  height: 400px;
+  overflow: hidden;
+}
+
+.child {
+  display: table-cell;
+  vertical-align: middle;
+  font-size: 1.5em;
+  font-family: 'Questrial', sans-serif;
+}
+
+.logo {
+  margin: 20px;
+}
+
+.form-group {
+  position: relative;
+  left: 25%;
 }
