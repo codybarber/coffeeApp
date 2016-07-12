@@ -149,3 +149,16 @@ button:active {
   text-decoration: none;
   box-shadow: 1px 1px 1px black;
 }
+
+.parent2 {
+  display: table;
+  height: 150px;
+  overflow: hidden;
+}
+
+.child2 {
+  display: table-cell;
+  vertical-align: bottom;
+  font-size: 1.1em;
+  font-family: 'Questrial', sans-serif;
+}
