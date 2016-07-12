@@ -91,6 +91,7 @@ body {
 
 .loginButton {
   margin-left: 25px;
+  margin-bottom: 25px;
   text-align: right;
 }
 
@@ -123,6 +124,10 @@ th {
   vertical-align: middle;
   font-size: 1.5em;
   font-family: 'Questrial', sans-serif;
+}
+
+.homepageText {
+  font-size: 1.75em;
 }
 
 .logo {
