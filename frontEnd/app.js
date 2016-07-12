@@ -1,7 +1,5 @@
 var app = angular.module('my-app', ['ngRoute', 'ngCookies']);
 
-
-
 app.config(function($routeProvider) {
   $routeProvider
 
@@ -31,7 +29,7 @@ app.config(function($routeProvider) {
   })
   .when('/thankyou', {
     templateUrl: 'thankyou.html',
-    controller: 'thankyouController'
+    controller: 'paymentController'
   });
 });
 
@@ -52,9 +50,9 @@ var order = {
   total: null
 };
 
-
+var API = 'http://localhost:8000';
 app.controller('optionsController', function($scope, $http, $location) {
-  var API = 'http://localhost:8000';
+
   $http.get(API + '/options')
   .success(function(data) {
     $scope.coffeeOptions = data;
@@ -70,7 +68,7 @@ app.controller('optionsController', function($scope, $http, $location) {
   $scope.submit2 = function(quantity) {
     order.options.grind = $scope.coffeeOptionFamily;
     order.options.quantity = quantity;
-    order.total = 20.00;
+    order.total = 14.00;
     $location.path('/delivery');
   };
 });
@@ -90,11 +88,45 @@ app.controller('deliveryController', function($scope, $http, $location) {
 
 app.controller('paymentController', function($scope, $http, $location, $cookies) {
   $scope.pay = function() {
-    $location.path('/thankyou');
-    $http.post('http://localhost:8000/orders', {
-      token: $cookies.get('Token'),
-      order: order
+    console.log('line 93');
+    var amount = order.total * 100;
+    var handler = StripeCheckout.configure({
+      key: 'pk_test_etAw7vNMpUggsCRpMvZTY8Gw',
+      locale: 'auto',
+      token: function(token) {
+        var tokenId = token.id;
+        return $http({
+          url: 'http://localhost:8000/payment',
+          method: 'POST',
+          data: {
+            amount: 100,
+            token: tokenId
+          }
+        })
+        .success(function(data) {
+          console.log('line 110');
+          console.log('Charge: ', data);
+          alert('You were charged $' + (data.charge.amount / 100));
+          $http.post('http://localhost:8000/orders', {
+            token: $cookies.get('Token'),
+            order: order
+          });
+          $location.path('/thankyou');
+          console.log('line 118');
+        })
+        .catch(function(err) {
+          console.log(err);
+          console.log('errrrrrrors');
+        });
+      }
     });
+    console.log('heyyyy');
+    handler.open({
+      name: 'allen-cody-coffee',
+      description: 'Test Card #: 4242 4242 4242 4242',
+      amount: amount
+    });
+
   };
   $scope.cancel = function() {
     $location.path('/');
@@ -144,10 +176,6 @@ app.controller('mainController', function() {
 
 });
 
-app.controller('thankyouController', function() {
-
-});
-
 app.run(function($rootScope, $location, $cookies) {
   $rootScope.$on('$locationChangeStart', function(event, nextUrl, currentUrl) {
     currentUrl = currentUrl.split('#');
@@ -168,5 +196,5 @@ app.run(function($rootScope, $location, $cookies) {
       $location.path(nextUrl[1]);
     }
     $cookies.put('nextUrl', nextUrl[1]);
-    });
   });
+});

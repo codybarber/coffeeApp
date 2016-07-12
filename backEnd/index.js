@@ -6,6 +6,9 @@ var bodyParser = require('body-parser');
 var bcrypt = require('bcrypt');
 var randomtoken = require('rand-token');
 var cors = require('cors');
+var stripe = require('stripe')(
+  'sk_test_tTmnADuLXcyI0U2xIpdghVzw'
+);
 
 /* MongoDB Setup */
 mongoose.connect('mongodb://localhost/coffeeDb');
@@ -212,6 +215,26 @@ app.post('/orders', function(request, response){
       status: 'fail',
       error: err.message});
     });
+});
+
+app.post('/payment', function(request, response) {
+  var amount = request.body.amount;
+  var token = request.body.token;
+  console.log('Order Submitted: ' + amount + ' ' + token);
+  var charge = stripe.charges.create({
+    amount: amount,
+    currency: 'usd',
+    source: token
+  }, function(err, charge) {
+    if (err) {
+      response.json({
+        status: 'fail',
+        error: err.message
+      });
+      return;
+    }
+    response.json({ status: 'ok', charge: charge});
+  });
 });
 
 app.get('/orders', function(request, response){

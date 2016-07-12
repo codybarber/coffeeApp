@@ -4,19 +4,20 @@ body {
 
 #image1 {
   background-image: url('coffee.jpg');
-  background-position: bottom -150px left 0px;
-  background-repeat: no-repeat;
+  background-position: 80% 75%;
   background-size: cover;
-  height: 400px;
-  max-width: 100%;
+  min-height: 450px;
+  min-width: 450px;
+  padding: 100px 30px 0px 50px;
 }
 
 #image2 {
   background-image: url('coffee-bags.jpg');
-  background-position: bottom -200px left -300px;
+  background-position: top;
+  min-height: 400px;
+  min-width: 450px;
+  padding: 100px 30px 0px 50px;
   background-repeat: no-repeat;
-  height: 400px;
-  max-width: 100%;
 }
 
 #text {
@@ -38,7 +39,7 @@ body {
 
 #image3 {
   background-image: url('cup-steam.jpg');
-  background-position: bottom -350px left 0px;
+  background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
   height: 400px;
@@ -90,6 +91,7 @@ body {
 
 .loginButton {
   margin-left: 25px;
+  text-align: right;
 }
 
 .resizedTextbox {
@@ -130,4 +132,20 @@ th {
 .form-group {
   position: relative;
   left: 25%;
+}
+
+button {
+  text-decoration: none;
+  color: black;
+  box-shadow: 2px 2px 2px grey;
+}
+
+button:hover {
+  text-decoration: none;
+  box-shadow: 2px 2px 2px black;
+}
+
+button:active {
+  text-decoration: none;
+  box-shadow: 1px 1px 1px black;
 }
