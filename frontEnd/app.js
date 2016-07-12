@@ -106,7 +106,6 @@ app.controller('paymentController', function($scope, $http, $location, $cookies)
         .success(function(data) {
           console.log('line 110');
           console.log('Charge: ', data);
-          alert('You were charged $' + (data.charge.amount / 100));
           $http.post('http://localhost:8000/orders', {
             token: $cookies.get('Token'),
             order: order
