@@ -9,10 +9,9 @@ var cors = require('cors');
 var stripe = require('stripe')(
   'sk_test_tTmnADuLXcyI0U2xIpdghVzw'
 );
-// var credentials = require('credentials.json');
-
+app.use(cors());
 /* MongoDB Setup */
-mongoose.connect('mongodb://' + 'coffeeapp' + ':' + 'coffeeapp' + '@ds025469.mlab.com:25469/coffee');
+mongoose.connect('mongodb://' + 'coffeeapp' + ':' + 'coffeeapp' + '@ds025469.mlab.com:25469/coffeeapp');
 
 /* bcrypt Setup */
 var saltRounds = 10;
@@ -22,7 +21,7 @@ var myEncryptedPassword = '';
 app.set('view engine', 'hbs');
 app.use(express.static('public'));
 app.use(bodyParser.json());
-app.use(cors());
+
 
 /* global variables */
 
@@ -59,30 +58,28 @@ app.post('/signup', function(request, response){
       /* The requested user was not located in the database.  this is a new user */
       console.log('the requested user [' + credentials._id + '] was not located in the database.  this is a new user');
       /* hash the password */
-      bcrypt.genSalt(saltRounds, function(err, salt) {
-        bcrypt.hash(credentials.password, salt, function(err, hash) {
-          if (err) {
-            console.log('an error occurred hashing the password');
+      bcrypt.hash(credentials.password, saltRounds, function(err, hash) {
+        if (err) {
+          console.log('an error occurred hashing the password');
+          console.error(err.message);
+          return;
+        }
+        /* Store hash in your password DB. */
+        console.log('the encrypted password is [' + hash + '].');
+        myNewUser = new User({
+          _id:                credentials._id,
+          encryptedPassword:  hash,
+          email:              credentials.email
+        });
+        myNewUser.save(function(err){
+          if(err) {
+            console.log('there was an error creating the new user in the database');
             console.error(err.message);
+            console.log(err.errors);
             return;
           }
-          /* Store hash in your password DB. */
-          console.log('the encrypted password is [' + hash + '].');
-          myNewUser = new User({
-            _id:                credentials._id,
-            encryptedPassword:  hash,
-            email:              credentials.email
-          });
-          myNewUser.save(function(err){
-            if(err) {
-              console.log('there was an error creating the new user in the database');
-              console.error(err.message);
-              console.log(err.errors);
-              return;
-            }
-            console.log('the user was created successfully in the database');
-            response.json({ status: 'ok'});
-          });
+          console.log('the user was created successfully in the database');
+          response.json({ status: 'ok'});
         });
       });
     } else if (credentials._id === res._id) {
