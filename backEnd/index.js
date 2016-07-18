@@ -3,15 +3,16 @@ var app = express();
 var User = require('./user');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
-var bcrypt = require('bcrypt');
+var bcrypt = require('my-bcrypt');
 var randomtoken = require('rand-token');
 var cors = require('cors');
 var stripe = require('stripe')(
   'sk_test_tTmnADuLXcyI0U2xIpdghVzw'
 );
+// var credentials = require('credentials.json');
 
 /* MongoDB Setup */
-mongoose.connect('mongodb://localhost/coffeeDb');
+mongoose.connect('mongodb://' + 'coffeeapp' + ':' + 'coffeeapp' + '@ds025469.mlab.com:25469/coffee');
 
 /* bcrypt Setup */
 var saltRounds = 10;
